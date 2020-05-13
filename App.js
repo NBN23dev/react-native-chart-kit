@@ -23,6 +23,7 @@ const chartConfigs = [
     backgroundColor: "#000000",
     backgroundGradientFrom: "#1E2923",
     backgroundGradientTo: "#08130D",
+    decimalPlaces: 0,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     style: {
       borderRadius: 16
@@ -123,7 +124,6 @@ export default class App extends React.Component {
             >
               <Text style={labelStyle}>Bezier Line Chart</Text>
               <LineChart
-                bezier
                 data={data}
                 width={width}
                 height={height}
@@ -209,7 +209,9 @@ export default class App extends React.Component {
                 style={graphStyle}
                 hidePointsAtIndex={[0, data.datasets[0].data.length - 1]}
               />
-              <Text style={labelStyle}>Line Chart with shadow background as line color</Text>
+              <Text style={labelStyle}>
+                Line Chart with shadow background as line color
+              </Text>
               <LineChart
                 bezier
                 data={data}

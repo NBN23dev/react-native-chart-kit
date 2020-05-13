@@ -70,7 +70,7 @@ class LineChart extends AbstractChart {
       if (dataset.withDots == false) return;
 
       dataset.data.forEach((x, i) => {
-        if (hidePointsAtIndex.includes(i)) {
+        if (hidePointsAtIndex.includes(i) || x == null) {
           return;
         }
         const cx =
@@ -308,7 +308,14 @@ class LineChart extends AbstractChart {
       return this.renderBezierShadow(config);
     }
 
-    const { data, width, height, paddingRight, paddingTop, useColorFromDataset } = config;
+    const {
+      data,
+      width,
+      height,
+      paddingRight,
+      paddingTop,
+      useColorFromDataset
+    } = config;
     const datas = this.getDatas(data);
     const baseHeight = this.calcBaseHeight(datas, height);
     return config.data.map((dataset, index) => {
@@ -332,7 +339,9 @@ class LineChart extends AbstractChart {
                 (dataset.data.length - 1)},${(height / 4) * 3 +
               paddingTop} ${paddingRight},${(height / 4) * 3 + paddingTop}`
           }
-          fill={`url(#fillShadowGradient${useColorFromDataset ? `_${index}` : ''})`}
+          fill={`url(#fillShadowGradient${
+            useColorFromDataset ? `_${index}` : ""
+          })`}
           strokeWidth={0}
         />
       );
@@ -357,6 +366,8 @@ class LineChart extends AbstractChart {
     const baseHeight = this.calcBaseHeight(datas, height);
     data.forEach((dataset, index) => {
       const points = dataset.data.map((d, i) => {
+        if (d == null) return;
+
         const x =
           (i * (width - paddingRight)) / dataset.data.length + paddingRight;
         const y =
@@ -428,7 +439,14 @@ class LineChart extends AbstractChart {
   };
 
   renderBezierShadow = config => {
-    const { width, height, paddingRight, paddingTop, data, useColorFromDataset } = config;
+    const {
+      width,
+      height,
+      paddingRight,
+      paddingTop,
+      data,
+      useColorFromDataset
+    } = config;
     return data.map((dataset, index) => {
       const d =
         this.getBezierLinePoints(dataset, config) +
@@ -440,7 +458,9 @@ class LineChart extends AbstractChart {
         <Path
           key={index}
           d={d}
-          fill={`url(#fillShadowGradient${useColorFromDataset ? `_${index}` : ''})`}
+          fill={`url(#fillShadowGradient${
+            useColorFromDataset ? `_${index}` : ""
+          })`}
           strokeWidth={0}
         />
       );
@@ -486,7 +506,7 @@ class LineChart extends AbstractChart {
       formatXLabel = xLabel => xLabel,
       segments,
       transparent = false,
-      chartConfig = {},
+      chartConfig = {}
     } = this.props;
     const { scrollableDotHorizontalOffset } = this.state;
     const { labels = [] } = data;
@@ -609,7 +629,7 @@ class LineChart extends AbstractChart {
                   data: data.datasets,
                   paddingRight,
                   paddingTop,
-                  useColorFromDataset: chartConfig.useShadowColorFromDataset,
+                  useColorFromDataset: chartConfig.useShadowColorFromDataset
                 })}
             </G>
             <G>
